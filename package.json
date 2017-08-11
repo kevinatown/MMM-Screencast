@@ -1,21 +1,25 @@
 {
   "name": "MagicMirror-Screencast",
-  "version": "1.1.0",
+  "version": "0.0.1",
   "description": "A module to cast to videos to a Magic Mirror",
+  "keywords": [
+    "chromecast",
+    "dial",
+    "launch",
+    "cast",
+    "youtube"
+  ],
+  "author": "Kevin Townsend",
   "license": "MIT",
-  "devDependencies": {
-    "grunt": "latest",
-    "grunt-eslint": "latest",
-    "grunt-jsonlint": "latest",
-    "grunt-markdownlint": "^1.0.13",
-    "grunt-stylelint": "latest",
-    "grunt-yamllint": "latest",
-    "stylelint-config-standard": "latest",
-    "time-grunt": "latest"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinatown/MMM-Screencast"
   },
+  "homepage": "https://github.com/kevinatown/MMM-Screencast#readme",
   "main": "app.js",
   "scripts": {
-    "start": "electron app.js"
+    "start": "electron app.js",
+    "test": "jest"
   },
   "dependencies": {
     "child_process": "^1.0.2",
