@@ -1,0 +1,27 @@
+{
+  "name": "MagicMirror-Screencast",
+  "version": "1.1.0",
+  "description": "A module to cast to videos to a Magic Mirror",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-eslint": "latest",
+    "grunt-jsonlint": "latest",
+    "grunt-markdownlint": "^1.0.13",
+    "grunt-stylelint": "latest",
+    "grunt-yamllint": "latest",
+    "stylelint-config-standard": "latest",
+    "time-grunt": "latest"
+  },
+  "main": "app.js",
+  "scripts": {
+    "start": "electron app.js"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "electron": "^1.6.11",
+    "electron-positioner": "^3.0.0",
+    "node-ipc": "^9.1.0",
+    "peer-dial": "0.0.7"
+  }
+}
