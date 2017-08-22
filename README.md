@@ -12,13 +12,13 @@ A module to cast to the [MagicMirror²](https://github.com/MichMich/MagicMirror/
 var config = {
     modules: [
         {
-			module: 'MMM-Screencast',
-			position: 'bottom_right', // This position is for a hidden <div /> and not the screencast window
-	 		config: {
-				position: 'bottomRight',
-				height: 300,
-				width: 500,
-			}
+		module: 'MMM-Screencast',
+		position: 'bottom_right', // This position is for a hidden <div /> and not the screencast window
+		config: {
+			position: 'bottomRight',
+			height: 300,
+			width: 500,
+		}
         }
     ]
 }
