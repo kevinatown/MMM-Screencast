@@ -14,7 +14,7 @@ var config = {
         {
 			module: 'MMM-Screencast',
 			position: 'bottom_right', // This position is for a hidden <div /> and not the screencast window
- 			config: {
+	 		config: {
 				position: 'bottomRight',
 				height: 300,
 				width: 500,
@@ -28,6 +28,6 @@ var config = {
 
 | Option    | Description
 |---------- |-----------
-| `position`| *Required* The position of the <br>**Options:** `['bottomRight', 'bottomCenter', 'bottomLeft', 'center',  'topRight', 'topCenter', 'topLeft']` <br>**Type:** `string` <br>**Note:** This module config actual sets the location, not the magic mirror position config.
-| `height`  | *Required* Height of the map. <br>**Type:** `number` (pixels)
-| `width`   | *Required* Width of the map. <br>**Type:** `number` (pixels)
+| `position`| *Required* The position of the screencast window. <br>**Options:** `['bottomRight', 'bottomCenter', 'bottomLeft', 'center',  'topRight', 'topCenter', 'topLeft']` <br>**Type:** `string` <br>**Note:** This module config actual sets the location, not the magic mirror position config.
+| `height`  | *Required* Height of the screencast window. <br>**Type:** `number` (pixels)
+| `width`   | *Required* Width of the screencast window. <br>**Type:** `number` (pixels)
