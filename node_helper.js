@@ -6,7 +6,6 @@ module.exports = NodeHelper.create({
 	},
 
 	socketNotificationReceived: function(notification, payload) {
-		console.log(notification, payload);
 		switch (notification) {
 			case 'SET_CONFIG':
 				this.config = payload;

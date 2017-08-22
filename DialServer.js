@@ -34,6 +34,28 @@ var apps = {
 			    console.log('closing code: ' + code);
 			});
     	}
+	},
+	"Hulu": {
+		name: "Hulu",
+		state: "stopped",
+		allowStop: true,
+		pid: null,
+	    launch: function (launchData, config) {
+	    	console.log(launchData);
+	  //       var url = "http://www.youtube.com/tv?"+launchData;
+	  //       child = spawn('npm', ['start', url, config.position, config.width, config.height], {
+  	// 			cwd: 'modules/MMM-Screencast'
+			// })
+			// child.stdout.on('data', function(data) {
+			//     console.log('screencast stdout: ' + data);
+			// });
+			// child.stderr.on('data', function(data) {
+			//     console.log('screencast stderr: ' + data);
+			// });
+			// child.on('close', function(code) {
+			//     console.log('closing code: ' + code);
+			// });
+   //  	}
 	}
 };
 

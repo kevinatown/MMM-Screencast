@@ -14,7 +14,6 @@ Module.register("MMM-Screencast", {
 	start: function() {
 		Log.info("Starting module: " + this.name);
 		this.sendSocketNotification('SET_CONFIG', this.config);
-		// this.getYoutube();
 	},
 
 	getDom: function() {
