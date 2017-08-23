@@ -1,5 +1,5 @@
 {
-  "name": "MagicMirror-Screencast",
+  "name": "magicmirror-screencast",
   "version": "0.0.1",
   "description": "A module to cast to videos to a Magic Mirror",
   "keywords": [
@@ -13,7 +13,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kevinatown/MMM-Screencast"
+    "url": "git+https://github.com/kevinatown/MMM-Screencast.git"
   },
   "homepage": "https://github.com/kevinatown/MMM-Screencast#readme",
   "main": "app.js",
@@ -27,5 +27,9 @@
     "electron-positioner": "^3.0.0",
     "node-ipc": "^9.1.0",
     "peer-dial": "0.0.7"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/kevinatown/MMM-Screencast/issues"
+  },
+  "devDependencies": {}
 }
