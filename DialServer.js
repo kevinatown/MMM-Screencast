@@ -55,7 +55,7 @@ var apps = {
 			// child.on('close', function(code) {
 			//     console.log('closing code: ' + code);
 			// });
-   //  	}
+     	}
 	}
 };
 
