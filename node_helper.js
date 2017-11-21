@@ -1,3 +1,5 @@
+var NodeHelper = require("node_helper");
+
 module.exports = NodeHelper.create({
 	dialServer: require("./DialServer.js"),
 	config: {},
