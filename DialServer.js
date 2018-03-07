@@ -5,11 +5,13 @@ const { spawn } = require('child_process');
 const ipc = require('node-ipc');
 ipc.config.id = 'screenCastDIAL';
 ipc.config.retry = 1000;
+ipc.config.socketRoot = 'tmp';
+ipc.config.networkHost = 'localhost';
+ipc.config.appSpace = 'MMM-Screencast';
 const app = express();
 const server = http.createServer(app);
 const PORT = 8569;
-// var PORT = 8080;
-const MANUFACTURER = "Kevin Townsend";
+const MANUFACTURER = "MMM-Screencast";
 const MODEL_NAME = "DIAL Server";
 var child = null;
 
@@ -71,13 +73,15 @@ var dialServer = new dial.Server({
 			if (app && app.pid == pid) {
 				app.pid = null;
 				app.state = "stopped";
-				ipc.connectTo('screenCastWindow',() => {
+				ipc.connectTo('screenCastWindow',
+					`${ipc.config.socketRoot}.${ipc.config.appspace}.${ipc.config.id}`,
+					() => {
     				ipc.of.screenCastWindow.on('connect',() => {
-                		ipc.of.screenCastWindow.emit('quit');
-            		});
-            		ipc.of.screenCastWindow.on('quit', () => {
-            			ipc.disconnect('screenCastWindow');
-            		});
+              ipc.of.screenCastWindow.emit('quit');
+            });
+        		ipc.of.screenCastWindow.on('quit', () => {
+        			ipc.disconnect('screenCastWindow');
+        		});
     			});
     			child = null;
 				callback(true);

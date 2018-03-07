@@ -25,8 +25,8 @@
     "child_process": "^1.0.2",
     "electron": "^1.6.11",
     "electron-positioner": "^3.0.0",
-    "node-ipc": "^9.1.0",
-    "peer-dial": "0.0.7"
+    "node-ipc": "^9.1.1",
+    "peer-dial": "0.0.8"
   },
   "bugs": {
     "url": "https://github.com/kevinatown/MMM-Screencast/issues"
