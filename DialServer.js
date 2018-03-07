@@ -74,7 +74,7 @@ var dialServer = new dial.Server({
 				app.pid = null;
 				app.state = "stopped";
 				ipc.connectTo('screenCastWindow',
-					`${ipc.config.socketRoot}.${ipc.config.appspace}.${ipc.config.id}`,
+					`${ipc.config.socketRoot}.${ipc.config.appspace}`,
 					() => {
     				ipc.of.screenCastWindow.on('connect',() => {
               ipc.of.screenCastWindow.emit('quit');
