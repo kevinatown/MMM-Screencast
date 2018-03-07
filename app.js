@@ -32,6 +32,7 @@ app.once('ready', function () {
     show: false,
     frame: false,
     zoomFactor: 1.0,
+    focusable: false
   };
 
   const screenCastWindow = new electron.BrowserWindow(windowOptions);
@@ -44,7 +45,6 @@ app.once('ready', function () {
   // Show window when page is ready
   screenCastWindow.once('ready-to-show', function () {
     screenCastWindow.show();
-    screenCastWindow.focus();
   });
 
 });
