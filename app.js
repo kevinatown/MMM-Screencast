@@ -42,7 +42,7 @@ app.once('ready', function () {
   screenCastWindow.loadURL(url)
 
   // Show window when page is ready
-  screenCastWindow.once('dom-ready', function () {
+  screenCastWindow.once('ready-to-show', function () {
     screenCastWindow.show();
     screenCastWindow.focus();
   });
