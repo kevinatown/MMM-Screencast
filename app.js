@@ -18,8 +18,6 @@ ipc.serve(`/${ipc.config.socketRoot}/${ipc.config.appSpace}.${ipc.config.id}`, (
     process.exit();
   });
 });
-
-ipc.server.start();
 const app = electron.app;
 
 app.once('ready', function () {
@@ -44,9 +42,11 @@ app.once('ready', function () {
   screenCastWindow.loadURL(url)
 
   // Show window when page is ready
-  screenCastWindow.once('ready-to-show', function () {
+  screenCastWindow.once('dom-ready', function () {
     screenCastWindow.show();
     screenCastWindow.focus();
   });
 
 });
+
+ipc.server.start();
