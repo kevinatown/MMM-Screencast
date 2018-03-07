@@ -1,7 +1,7 @@
 const dial = require("peer-dial");
 const http = require('http');
 const express = require('express');
-const { spawn } = require('child_process');
+const { spawn } = require('cross-spawn');
 const ipc = require('node-ipc');
 ipc.config.id = 'screenCastDIAL';
 ipc.config.retry = 1000;
