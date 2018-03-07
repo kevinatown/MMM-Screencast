@@ -11,7 +11,7 @@ const position = process.argv[3]
 const width = parseInt(process.argv[4], 10)
 const height = parseInt(process.argv[5], 10)
 
-ipc.serve(`${ipc.config.socketRoot}.${ipc.config.appSpace}.${ipc.config.id}`, () => {
+ipc.serve(`/${ipc.config.socketRoot}/${ipc.config.appSpace}.${ipc.config.id}`, () => {
   ipc.server.on('quit', (data, socket) => {
     ipc.server.emit(socket, 'quit');
     app.quit();
@@ -50,4 +50,3 @@ app.once('ready', function () {
   });
 
 });
-

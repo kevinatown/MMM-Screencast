@@ -11,7 +11,8 @@ ipc.config.appSpace = 'MMM-Screencast';
 const app = express();
 const server = http.createServer(app);
 const PORT = 8569;
-const MANUFACTURER = "MMM-Screencast";
+// var PORT = 8080;
+const MANUFACTURER = "Kevin Townsend";
 const MODEL_NAME = "DIAL Server";
 var child = null;
 
@@ -74,7 +75,7 @@ var dialServer = new dial.Server({
 				app.pid = null;
 				app.state = "stopped";
 				ipc.connectTo('screenCastWindow',
-					`${ipc.config.socketRoot}.${ipc.config.appspace}`,
+					`/${ipc.config.socketRoot}/${ipc.config.appSpace}.screenCastWindow`,
 					() => {
     				ipc.of.screenCastWindow.on('connect',() => {
               ipc.of.screenCastWindow.emit('quit');
