@@ -57,3 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
+# Screenshot folder
+dir_to_ignore/

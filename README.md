@@ -31,3 +31,11 @@ var config = {
 | `position`| *Required* The position of the screencast window. <br>**Options:** `['bottomRight', 'bottomCenter', 'bottomLeft', 'center',  'topRight', 'topCenter', 'topLeft']` <br>**Type:** `string` <br>**Note:** This module config actual sets the location, not the magic mirror position config.
 | `height`  | *Required* Height of the screencast window. <br>**Type:** `number` (pixels)
 | `width`   | *Required* Width of the screencast window. <br>**Type:** `number` (pixels)
+
+## Screenshots
+
+<p align="middle">
+<img src="/screenshots/screenshot.png" width="400">
+<img src="/screenshots/screenshot1.png" width="400">
+<img src="/screenshots/screenshot2.jpg" width="400">
+</p>
