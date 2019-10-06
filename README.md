@@ -1,6 +1,8 @@
 # MMM-Screencast
 A module to cast to the [MagicMirror²](https://github.com/MichMich/MagicMirror/). Currently, only YouTube casting is supported. Hopefully, I will have time to add more casting options.
 
+**NOTE: It looks as is if youtube pulled their support for their open platform streamer. I am currnetly working on a new version of MMM-Screencast, but until then MMM-Screencast will not work.**
+
 ## Using the module
 
 * Navigate to the modules directory via the follow command: `cd MagicMirror/modules`
