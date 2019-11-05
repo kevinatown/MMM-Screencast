@@ -29,6 +29,8 @@ const app = electron.app;
 app.once('ready', function () {
   electron.session.defaultSession.setUserAgent(userAgent);
   
+  // electron
+
   const windowOptions = {
     maxHeight: height,
     maxWidth: width,
@@ -51,7 +53,15 @@ app.once('ready', function () {
 
   // Show window when page is ready
   screenCastWindow.once('ready-to-show', function () {
+
+    // this is messy for autoplay but youtube, due to chrome no longer supports
+    // autoplay
+    const autoPlayScript = `
+      const videoEle = screenCastWindow.document.getElementsByTagName('video');
+      if (!!videoEle && videoEle.length > 1) videoEle[0].play();
+    `;
     screenCastWindow.show();
+    screenCastWindow.webContents.executeJavaScript(autoPlayScript, true);
   });
 
 });
