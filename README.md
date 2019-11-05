@@ -1,7 +1,7 @@
 # MMM-Screencast
 A module to cast to the [MagicMirror²](https://github.com/MichMich/MagicMirror/). Currently, only YouTube casting is supported. Hopefully, I will have time to add more casting options.
 
-**NOTE: It looks as is if youtube pulled their support for their open platform streamer. I am currnetly working on a new version of MMM-Screencast, but until then MMM-Screencast will not work.**
+**NOTE: MMM-Screencast has been updated to deal with new support, please pull from master to ensure that you have the most up-to-date version. Thanks!**
 
 ## Using the module
 
@@ -41,3 +41,7 @@ var config = {
 <img src="/screenshots/screenshot1.png" width="400">
 <img src="/screenshots/screenshot2.jpg" width="400">
 </p>
+
+## Special Thanks!
+* [@Podgrade](https://github.com/Podgrade) - for the user agent fix
+* [@Poolitzer](https://github.com/Poolitzer) - for the screenshots
