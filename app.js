@@ -76,7 +76,20 @@ app.once('ready', () => {
 
     //
     // THIS MIGHT NEED WORK
+    // 
     //
+
+
+    // 
+    // maybe something like this:
+    // 
+    // win.webContents.on('console-message', () => {
+    //  // do the shit to cloes the window like above
+    // })
+    // 
+    // create a specific message or something to know that shit's done, or listen to whatever
+    // https://electronjs.org/docs/api/web-contents#event-console-message
+    // 
     ipc.server.on('screenCastWindow_config', (data, socket) => {
       const { extraScript, closeOnEnd } = data;
       
