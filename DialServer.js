@@ -3,40 +3,48 @@ const http = require('http');
 const express = require('express');
 const { spawn } = require('cross-spawn');
 const ipc = require('node-ipc');
-ipc.config.id = 'screenCastDIAL';
+ipc.config.id = 'screenCastWindow';
 ipc.config.retry = 1000;
 ipc.config.socketRoot = 'tmp';
 ipc.config.networkHost = 'localhost';
 ipc.config.appSpace = 'MMM-Screencast';
+ipc.config.port = 8123;
+
+const socketId = 'screenCastWindow';
+const socketDomain = `/${ipc.config.socketRoot}/${ipc.config.appSpace}.${socketId}`;
+
 const app = express();
 const server = http.createServer(app);
 const PORT = 8569;
-// var PORT = 8080;
 const MANUFACTURER = "Kevin Townsend";
 const MODEL_NAME = "DIAL Server";
-var child = null;
+let child = null;
 
-var apps = {
+const apps = {
 	"YouTube": {
 		name: "YouTube",
 		state: "stopped",
 		allowStop: true,
 		pid: null,
-	    launch: function (launchData, config) {
-	        var url = "http://www.youtube.com/tv?"+launchData;
-	        child = spawn('npm', ['start', url, config.position, config.width, config.height], {
-  				cwd: 'modules/MMM-Screencast'
-			})
+    launch: function (launchData, config) {
+      let url = "http://www.youtube.com/tv?"+launchData;
+      
+      child = spawn('npm', ['start', url, config.position, config.width, config.height], {
+				cwd: 'modules/MMM-Screencast'
+			});
+
 			child.stdout.on('data', function(data) {
-			    console.log('screencast stdout: ' + data);
+			   console.log('screencast stdout: ' + data);
 			});
+
 			child.stderr.on('data', function(data) {
-			    console.log('screencast stderr: ' + data);
+			   console.log('screencast stderr: ' + data);
 			});
+
 			child.on('close', function(code) {
-			    console.log('closing code: ' + code);
+			   console.log('closing code: ' + code);
 			});
-    		}
+  	}
 	}
 };
 
@@ -55,36 +63,44 @@ var dialServer = new dial.Server({
 			return app;
 		},
 		
-		launchApp: function(appName,lauchData,callback){
-			var app = apps[appName];
+		launchApp: function(appName, lauchData, callback){
+			let app = apps[appName];
 			var pid = null;
 			if (app) {
 				app.pid = "run";
 				app.state = "starting";
-                app.launch(lauchData, dialServer.electronConfig);
-                app.state = "running";
+        app.launch(lauchData, dialServer.electronConfig);
+        app.state = "running";
 			}
+
+
 			callback(app.pid);
 		},
 
-		stopApp: function(appName,pid,callback){
-            console.log("Got request to stop", appName," with pid: ", pid);
+		stopApp: function(appName, pid, callback) {
+      
+      console.log("Got request to stop", appName," with pid: ", pid);
 
-			var app = apps[appName];
+			let app = apps[appName];
+			
 			if (app && app.pid == pid) {
 				app.pid = null;
 				app.state = "stopped";
-				ipc.connectTo('screenCastWindow',
-					`/${ipc.config.socketRoot}/${ipc.config.appSpace}.screenCastWindow`,
+				ipc.connectTo(socketId,
+					socketDomain,
 					() => {
+
     				ipc.of.screenCastWindow.on('connect',() => {
               ipc.of.screenCastWindow.emit('quit');
             });
+
         		ipc.of.screenCastWindow.on('quit', () => {
         			ipc.disconnect('screenCastWindow');
         		});
-    			});
-    			child = null;
+    			}
+    		);
+    		
+    		child = null;
 				callback(true);
 			}
 			else {
@@ -100,7 +116,8 @@ var App = function() {
 
 	this.start = function(config) {
 		dialServer.electronConfig = config;
-		this.server.listen(PORT,function(){
+
+		this.server.listen(PORT, function() {
 			dialServer.start();
 			console.log("DIAL Server is running on PORT "+PORT);
 		});
