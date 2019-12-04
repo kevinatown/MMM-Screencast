@@ -1,12 +1,11 @@
-var NodeHelper = require("node_helper");
+const NodeHelper = require("node_helper");
 
 module.exports = NodeHelper.create({
 	dialServer: require("./DialServer.js"),
 	config: {},
-
 	start: function() {
+		// so some setup
 	},
-
 	socketNotificationReceived: function(notification, payload) {
 		switch (notification) {
 			case 'SET_CONFIG':
