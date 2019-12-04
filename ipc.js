@@ -28,7 +28,6 @@ class Ipc {
   }
 }
 
-
 class IpcServer extends Ipc {
   constructor() {
     super();
