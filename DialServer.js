@@ -18,7 +18,7 @@ const apps = {
     allowStop: true,
     pid: null,
     launch: function (launchData, config) {
-      let url = "http://www.youtube.com/tv?"+launchData;
+      const url = "https://www.youtube.com/tv?"+launchData;
       
       child = spawn('npm', ['start'], {
         cwd: 'modules/MMM-Screencast'
@@ -26,7 +26,7 @@ const apps = {
 
       this.ipc = new IpcClient((self) => {
         self.on('connect', (data) => {
-          self.emit('SEND_CONFIG', { ...config, url: "http://www.youtube.com/tv?"+launchData });
+          self.emit('SEND_CONFIG', { ...config, url });
         });
       });
 
