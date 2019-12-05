@@ -70,11 +70,11 @@ const App = function() {
 	        app.state = "starting";
 	        app.launch(lauchData, this.electronConfig);
 
-	        this.mmSendSocket('MMM-Screencast_LAUNCH-APP', { app: app.name, state: app.state });
+	        this.mmSendSocket('MMM-Screencast:LAUNCH-APP', { app: app.name, state: app.state });
 
 	        app.ipc.on('APP_READY' () => {
 	        	app.state = "running";
-	        	this.mmSendSocket('MMM-Screencast_RUN-APP', { app: app.name, state: app.state });
+	        	this.mmSendSocket('MMM-Screencast:RUN-APP', { app: app.name, state: app.state });
 	        });
 	    		
 	      }
@@ -94,7 +94,7 @@ const App = function() {
 	        });
 	        app.ipc.emit('quit');
 
-	        this.mmSendSocket('MMM-Screencast_STOP-APP', { app: app.name, state: app.state });
+	        this.mmSendSocket('MMM-Screencast:STOP-APP', { app: app.name, state: app.state });
 	        child = null;
 
 	        callback(true);
