@@ -4,7 +4,7 @@ module.exports = NodeHelper.create({
 	dialServer: require("./DialServer.js"),
 	config: {},
 	start: function() {
-		// so some setup
+		this.dialServer.mmSendSocket = this.sendSocketNotification;
 	},
 	socketNotificationReceived: function(notification, payload) {
 		switch (notification) {

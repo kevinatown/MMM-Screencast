@@ -45,63 +45,76 @@ const apps = {
   }
 };
 
-var dialServer = new dial.Server({
-  corsAllowOrigins: true,
-  expressApp: app,
-  port: PORT,
-  prefix: "/dial",
-  manufacturer: MANUFACTURER,
-  modelName: MODEL_NAME,
-  launchFunction: null,
-  electronConfig: {},
-  delegate: {
-    getApp: function(appName) {
-      return apps[appName];
-    },
-    
-    launchApp: function(appName, lauchData, callback){
-      const app = apps[appName];
-      if (app) {
-        app.pid = "run";
-        app.state = "starting";
-        app.launch(lauchData, dialServer.electronConfig);
-        app.state = "running";
-      }
-
-      callback(app.pid);
-    },
-
-    stopApp: function(appName, pid, callback) {
-      console.log("Got request to stop", appName," with pid: ", pid);
-      const app = apps[appName];
-      
-      if (app && app.pid == pid) {
-        app.pid = null;
-        app.state = "stopped";
-        app.ipc.on('quit', (data) => {
-          app.ipc.disconnect();
-        });
-        app.ipc.emit('quit');
-
-        child = null;
-        callback(true);
-      }
-      else {
-        callback(false);
-      }
-    }
-  }
-});
-
-var App = function() {
+const App = function() {
   this.config = {};
   this.server = http.createServer(app);
+  this.dialServer = new dial.Server({
+	  corsAllowOrigins: true,
+	  expressApp: app,
+	  port: PORT,
+	  prefix: "/dial",
+	  manufacturer: MANUFACTURER,
+	  modelName: MODEL_NAME,
+	  launchFunction: null,
+	  electronConfig: {},
+	  mmSendSocket: (type, payload) => void,
+	  delegate: {
+	    getApp: function(appName) {
+	      return apps[appName];
+	    },
+	    
+	    launchApp: function(appName, lauchData, callback){
+	      const app = apps[appName];
+	      if (app) {
+	        app.pid = "run";
+	        app.state = "starting";
+	        app.launch(lauchData, this.electronConfig);
+
+	        this.mmSendSocket('MMM-Screencast:LAUNCH-APP', { app: app.name, state: app.state });
+
+	        app.ipc.on('APP_READY' () => {
+	        	app.state = "running";
+	        	this.mmSendSocket('MMM-Screencast:RUN-APP', { app: app.name, state: app.state });
+	        });
+	    		
+	      }
+
+	      callback(app.pid);
+	    },
+
+	    stopApp: function(appName, pid, callback) {
+	      console.log("Got request to stop", appName," with pid: ", pid);
+	      const app = apps[appName];
+	      
+	      if (app && app.pid == pid) {
+	        app.pid = null;
+	        app.state = "stopped";
+	        app.ipc.on('quit', (data) => {
+	          app.ipc.disconnect();
+	        });
+	        app.ipc.emit('quit');
+
+	        this.mmSendSocket('MMM-Screencast:STOP-APP', { app: app.name, state: app.state });
+	        child = null;
+
+	        callback(true);
+	      } else {
+	        callback(false);
+	      }
+	    }
+	  }
+	});
 
   this.start = function(config) {
-    dialServer.electronConfig = config;
+    this.dialServer.electronConfig = config;
+    const { castName } = config;
+
+    if (!!castName) {
+    	this.dialServer.friendlyName = castName;
+    }
 
     this.server.listen(PORT, function() {
-      dialServer.start();
+      this.dialServer.start();
       console.log("DIAL Server is running on PORT "+PORT);
     });
   };
