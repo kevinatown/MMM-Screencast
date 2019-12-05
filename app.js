@@ -18,7 +18,8 @@ app.once('ready', () => {
 
   ipcInstance.on('SEND_CONFIG', (data, soket) => {
     const { url, position, width, height } = data;
-     // electron
+    
+    // electron
     const windowOptions = {
       maxHeight: height,
       maxWidth: width,
@@ -88,5 +89,4 @@ app.once('ready', () => {
   });
 
   ipcInstance.broadcast('APP_READY');
-
 });
