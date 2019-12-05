@@ -57,6 +57,7 @@ const App = function() {
 	  modelName: MODEL_NAME,
 	  launchFunction: null,
 	  electronConfig: {},
+	  mmmSendSocket: (type, payload) => void,
 	  delegate: {
 	    getApp: function(appName) {
 	      return apps[appName];
@@ -68,6 +69,7 @@ const App = function() {
 	        app.pid = "run";
 	        app.state = "starting";
 	        app.launch(lauchData, this.electronConfig);
+	        this.mmmSendSocket('MMM-Screencast_LAUNCH-APP', { app: app.name, state: app.state });
 	        app.state = "running";
 	      }
 
@@ -86,6 +88,7 @@ const App = function() {
 	        });
 	        app.ipc.emit('quit');
 
+	        this.mmmSendSocket('MMM-Screencast_STOP-APP', { app: app.name, state: app.state });
 	        child = null;
 	        callback(true);
 	      }
