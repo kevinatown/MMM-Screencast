@@ -45,7 +45,7 @@ app.once('ready', () => {
       // this is messy for autoplay but youtube, due to chrome no longer supports
       // autoplay
       const autoPlayScript = `
-        const videoEle = screenCastWindow.document.getElementsByTagName('video');
+        const videoEle = document.getElementsByTagName('video');
         if (!!videoEle && videoEle.length > 1) videoEle[0].play();
       `;
 
