@@ -84,6 +84,7 @@ app.once('ready', () => {
       `;
 
       screenCastWindow.show();
+      // screenCastWindow.webContents.openDevTools();
       screenCastWindow.webContents.executeJavaScript(autoPlayScript, true);
     });
   });

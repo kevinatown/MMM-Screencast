@@ -57,22 +57,22 @@ const App = function() {
 	  modelName: MODEL_NAME,
 	  launchFunction: null,
 	  electronConfig: {},
-	  mmSendSocket: (type, payload) => void,
+	  mmSendSocket: (type, payload) => null,
 	  delegate: {
 	    getApp: function(appName) {
 	      return apps[appName];
 	    },
 	    
-	    launchApp: function(appName, lauchData, callback){
+	    launchApp: (appName, lauchData, callback) => {
 	      const app = apps[appName];
 	      if (app) {
 	        app.pid = "run";
 	        app.state = "starting";
-	        app.launch(lauchData, this.electronConfig);
+	        app.launch(lauchData, this.dialServer.electronConfig);
 
 	        this.mmSendSocket('MMM-Screencast:LAUNCH-APP', { app: app.name, state: app.state });
 
-	        app.ipc.on('APP_READY' () => {
+	        app.ipc.on('APP_READY', () => {
 	        	app.state = "running";
 	        	this.mmSendSocket('MMM-Screencast:RUN-APP', { app: app.name, state: app.state });
 	        });
@@ -105,15 +105,15 @@ const App = function() {
 	  }
 	});
 
-  this.start = function(config) {
+  this.start = (config) => {
     this.dialServer.electronConfig = config;
     const { castName } = config;
 
     if (!!castName) {
-    	this.dialServer.friendlyName = castName;
+      this.dialServer.friendlyName = castName;
     }
 
-    this.server.listen(PORT, function() {
+    this.server.listen(PORT, () => {
       this.dialServer.start();
       console.log("DIAL Server is running on PORT "+PORT);
     });
