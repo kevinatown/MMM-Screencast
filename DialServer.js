@@ -70,11 +70,11 @@ const App = function() {
 	        app.state = "starting";
 	        app.launch(lauchData, this.dialServer.electronConfig);
 
-	        this.mmSendSocket('MMM-Screencast:LAUNCH-APP', { app: app.name, state: app.state });
+	        // this.mmSendSocket('MMM-Screencast:LAUNCH-APP', { app: app.name, state: app.state });
 
 	        app.ipc.on('APP_READY', () => {
 	        	app.state = "running";
-	        	this.mmSendSocket('MMM-Screencast:RUN-APP', { app: app.name, state: app.state });
+	        	// this.mmSendSocket('MMM-Screencast:RUN-APP', { app: app.name, state: app.state });
 	        });
 	    		
 	      }
@@ -94,7 +94,7 @@ const App = function() {
 	        });
 	        app.ipc.emit('quit');
 
-	        this.mmSendSocket('MMM-Screencast:STOP-APP', { app: app.name, state: app.state });
+	        // this.mmSendSocket('MMM-Screencast:STOP-APP', { app: app.name, state: app.state });
 	        child = null;
 
 	        callback(true);
@@ -107,11 +107,18 @@ const App = function() {
 
   this.start = (config) => {
     this.dialServer.electronConfig = config;
-    const { castName } = config;
+    const { castName, port } = config;
 
     if (!!castName) {
       this.dialServer.friendlyName = castName;
     }
+
+    let usePort = PORT;
+    if (!!port) {
+      usePort = port;
+      this.dialServer.port = port;
+    }
+
 
     this.server.listen(PORT, () => {
       this.dialServer.start();

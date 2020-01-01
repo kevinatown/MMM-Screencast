@@ -35,6 +35,7 @@ var config = {
 | `width`   | *Required* Width of the screencast window. <br>**Type:** `number` (pixels)
 | `autoClose`| *Optional* Auto close the screencast window when the playlist/song is finsihed. <br>**Type:** `boolean` default `false`
 | `castName`| *Optional* The title to display in your device's cast list. <br>**Type** `string` defalt `os.hostname`
+| `port`    | *Optional* A port to run the dialserver on **Type** `number` default `8569`
 
 ## Screenshots
 
