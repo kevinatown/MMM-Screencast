@@ -8,7 +8,7 @@ const ipcInstance = new IpcServer();
 const app = electron.app;
 
 ipcInstance.on('quit', (data, socket) => {
-  ipcInstance.emit(data, socket)('quit');
+  ipcInstance.emit(socket, 'quit', {});
   app.quit();
   process.exit();
 });
@@ -16,7 +16,7 @@ ipcInstance.on('quit', (data, socket) => {
 app.once('ready', () => {
   electron.session.defaultSession.setUserAgent(userAgent);
 
-  ipcInstance.on('SEND_CONFIG', (data, soket) => {
+  ipcInstance.on('SEND_CONFIG', (data, socket) => {
     const { url, position, width, height } = data;
     
     // electron
@@ -83,11 +83,10 @@ app.once('ready', () => {
 
       `;
 
+      ipcInstance.emit(socket, 'APP_READY', {});
       screenCastWindow.show();
       // screenCastWindow.webContents.openDevTools();
       screenCastWindow.webContents.executeJavaScript(autoPlayScript, true);
     });
   });
-
-  ipcInstance.broadcast('APP_READY');
 });

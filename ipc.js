@@ -43,8 +43,8 @@ class IpcServer extends Ipc {
     return this.server.on(type, (data, socket) => cb(data, socket));
   }
 
-  emit(data, socket) {
-    return (type, payload) => this.server.emit(socket, type, payload);
+  emit(socket, type, payload) {
+    return this.server.emit(socket, type, payload);
   }
 
   broadcast(type, payload) {

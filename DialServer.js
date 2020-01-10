@@ -72,13 +72,13 @@ class DialServer {
             // this.mmSendSocket('MMM-Screencast:LAUNCH-APP', { app: app.name, state: app.state });
 
             castApp.ipc.on('APP_READY', () => {
+              
+              console.log("Got request to start", appName," with pid: ");
               castApp.state = "running";
+              callback(app.pid);
               // this.mmSendSocket('MMM-Screencast:RUN-APP', { app: app.name, state: app.state });
             });
-            
           }
-
-          callback(app.pid);
         },
 
         stopApp: function(appName, pid, callback) {
