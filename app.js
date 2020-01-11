@@ -83,8 +83,8 @@ app.once('ready', () => {
 
       `;
 
-      ipcInstance.emit(socket, 'APP_READY', {});
       screenCastWindow.show();
+      ipcInstance.emit(socket, 'APP_READY', {});
       // screenCastWindow.webContents.openDevTools();
       screenCastWindow.webContents.executeJavaScript(autoPlayScript, true);
     });

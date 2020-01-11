@@ -69,14 +69,12 @@ class DialServer {
             castApp.state = "starting";
             castApp.launch(lauchData, this.config);
 
-            // this.mmSendSocket('MMM-Screencast:LAUNCH-APP', { app: app.name, state: app.state });
+            this.mmSendSocket('MMM-Screencast:LAUNCH-APP', { app: app.name, state: app.state });
 
             castApp.ipc.on('APP_READY', () => {
-              
-              console.log("Got request to start", appName," with pid: ");
               castApp.state = "running";
+              this.mmSendSocket('MMM-Screencast:RUN-APP', { app: app.name, state: app.state });
               callback(app.pid);
-              // this.mmSendSocket('MMM-Screencast:RUN-APP', { app: app.name, state: app.state });
             });
           }
         },
@@ -120,6 +118,7 @@ class DialServer {
 
     this.server.listen(usePort, () => {
       this.dialServer.start();
+      this.mmSendSocket('MMM-Screencast:START-DIAL', { port: usePort });
       console.log("DIAL Server is running on PORT "+usePort);
     });
   }

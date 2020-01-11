@@ -20,5 +20,10 @@ Module.register("MMM-Screencast", {
 		// load fake div
 		const div = document.createElement("div");
 		return div;
+	},
+	socketNotificationReceived: function(notification, payload) { 
+		Log.log(notification, payload);
+		Log.info(notification, payload);
+		this.sendNotification(notification, payload);
 	}
 });
