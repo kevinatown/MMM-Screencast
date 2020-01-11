@@ -111,7 +111,6 @@ class DialServer {
 
   start() {
     const { castName, port } = this.config;
-
     const usePort = !!port ? port : PORT;
 
     this.initDialServer(usePort);
