@@ -47,14 +47,18 @@ const apps = {
 
 class DialServer {
   constructor() {
+    this.dialServer;
     this._mmSendSocket;
     this._castAppName = null;
     this.config = {};
     this.server = http.createServer(app);
+  }
+
+  initDialServer(port) {
     this.dialServer = new dial.Server({
+      port,
       corsAllowOrigins: true,
       expressApp: app,
-      port: PORT,
       prefix: "/dial",
       manufacturer: MANUFACTURER,
       modelName: MODEL_NAME,
@@ -108,14 +112,13 @@ class DialServer {
   start() {
     const { castName, port } = this.config;
 
+    const usePort = !!port ? port : PORT;
+
+    this.initDialServer(usePort);
+
+
     if (!!castName) {
       this.dialServer.friendlyName = castName;
-    }
-
-    let usePort = PORT;
-    if (!!port) {
-      usePort = port;
-      this.dialServer.port = port;
     }
 
     this.server.listen(usePort, () => {
