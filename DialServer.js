@@ -47,6 +47,8 @@ const apps = {
 
 class DialServer {
   constructor() {
+    this._mmSendSocket;
+    this._castAppName = null;
     this.config = {};
     this.server = http.createServer(app);
     this.dialServer = new dial.Server({
@@ -73,28 +75,28 @@ class DialServer {
 
             castApp.ipc.on('APP_READY', () => {
               castApp.state = "running";
+              this._castAppName = appName;
               this.mmSendSocket('MMM-Screencast:RUN-APP', { app: app.name, state: app.state });
               callback(app.pid);
             });
           }
         },
-
-        stopApp: function(appName, pid, callback) {
+        stopApp: (appName, pid, callback) => {
           console.log("Got request to stop", appName," with pid: ", pid);
-          const app = apps[appName];
+          const castApp = apps[appName];
           
-          if (app && app.pid == pid) {
-            app.pid = null;
-            app.state = "stopped";
-            app.ipc.on('quit', (data) => {
-              app.ipc.disconnect();
+          if (castApp && castApp.pid == pid) {
+            castApp.ipc.on('QUIT_HEARD', (data) => {
+              castApp.ipc.disconnect();
+              castApp.state = "stopped";
+              castApp.pid = null;
+              child = null;
+              this._castAppName = null;
+              this.mmSendSocket('MMM-Screencast:STOP-APP', { app: app.name, state: app.state });
+              callback(true);
             });
-            app.ipc.emit('quit');
+            castApp.ipc.emit('QUIT');
 
-            // this.mmSendSocket('MMM-Screencast:STOP-APP', { app: app.name, state: app.state });
-            child = null;
-
-            callback(true);
           } else {
             callback(false);
           }
@@ -121,6 +123,18 @@ class DialServer {
       this.mmSendSocket('MMM-Screencast:START-DIAL', { port: usePort });
       console.log("DIAL Server is running on PORT "+usePort);
     });
+  }
+
+  get castSocket() {
+    return apps[this._castAppName].ipc;
+  }
+
+  get mmSendSocket() {
+    return this._mmSendSocket;
+  }
+
+  set mmSendSocket(socket) {
+    return this._mmSendSocket = socket;
   }
 
   setConfig(_c) {

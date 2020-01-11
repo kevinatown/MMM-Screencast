@@ -7,8 +7,8 @@ const userAgent = 'Mozilla/5.0 (SMART-TV; Linux; Tizen 2.4.0) AppleWebkit/538.1 
 const ipcInstance = new IpcServer();
 const app = electron.app;
 
-ipcInstance.on('quit', (data, socket) => {
-  ipcInstance.emit(socket, 'quit', {});
+ipcInstance.on('QUIT', (data, socket) => {
+  ipcInstance.emit(socket, 'QUIT_HEARD', {});
   app.quit();
   process.exit();
 });
@@ -84,9 +84,9 @@ app.once('ready', () => {
       `;
 
       screenCastWindow.show();
-      ipcInstance.emit(socket, 'APP_READY', {});
       // screenCastWindow.webContents.openDevTools();
       screenCastWindow.webContents.executeJavaScript(autoPlayScript, true);
+      ipcInstance.emit(socket, 'APP_READY', {});
     });
   });
 });
