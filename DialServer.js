@@ -99,8 +99,8 @@ class DialServer {
               this.mmSendSocket('MMM-Screencast:STOP-APP', { app: app.name, state: app.state });
               callback(true);
             });
-            castApp.ipc.emit('QUIT');
 
+            castApp.ipc.emit('QUIT');
           } else {
             callback(false);
           }
@@ -116,7 +116,6 @@ class DialServer {
 
     this.initDialServer(usePort);
 
-
     if (!!castName) {
       this.dialServer.friendlyName = castName;
     }
@@ -124,7 +123,6 @@ class DialServer {
     this.server.listen(usePort, () => {
       this.dialServer.start();
       this.mmSendSocket('MMM-Screencast:START-DIAL', { port: usePort });
-      console.log("DIAL Server is running on PORT "+usePort);
     });
   }
 

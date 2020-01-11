@@ -22,8 +22,6 @@ Module.register("MMM-Screencast", {
 		return div;
 	},
 	socketNotificationReceived: function(notification, payload) { 
-		Log.log(notification, payload);
-		Log.info(notification, payload);
 		this.sendNotification(notification, payload);
 	}
 });
