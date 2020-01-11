@@ -1,17 +1,16 @@
-var NodeHelper = require("node_helper");
+const NodeHelper = require("node_helper");
+const DialServer = require("./DialServer.js");
 
 module.exports = NodeHelper.create({
-	dialServer: require("./DialServer.js"),
-	config: {},
-
+	dialServer: new DialServer(),
 	start: function() {
+		this.dialServer.mmSendSocket = (n,p) => this.sendSocketNotification(n,p);
 	},
-
 	socketNotificationReceived: function(notification, payload) {
 		switch (notification) {
 			case 'SET_CONFIG':
-				this.config = payload;
-				this.dialServer.start(payload);
+				this.dialServer.setConfig(payload);
+				this.dialServer.start();
 				break;
 			default:
 				break;
