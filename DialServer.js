@@ -40,6 +40,9 @@ const apps = {
 
       child.on('close', function(code) {
          console.log('closing code: ' + code);
+         child = spawn('npm', ['stop'], {
+          cwd: 'modules/MMM-Screencast'
+        });
       });
     }
   }

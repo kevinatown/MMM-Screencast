@@ -16,6 +16,10 @@ Module.register("MMM-Screencast", {
 		this.sendSocketNotification('SET_CONFIG', this.config);
 	},
 
+	stop: function() {
+		Log.info("Stopping module: " + this.name);
+	},
+
 	getDom: function() {
 		// load fake div
 		const div = document.createElement("div");
