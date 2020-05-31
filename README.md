@@ -44,6 +44,6 @@ var config = {
 <img src="/screenshots/screenshot2.jpg" width="400">
 </p>
 
-## Special Thanks!
+## Special Thanks and Contributors!
 * [@Podgrade](https://github.com/Podgrade) - for the user agent fix
 * [@Poolitzer](https://github.com/Poolitzer) - for the screenshots
