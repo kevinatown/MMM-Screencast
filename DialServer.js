@@ -125,6 +125,10 @@ class DialServer {
     });
   }
 
+  stopCast() {
+    console.log(this.dialServer, this.dialServer.delegate);
+  }
+
   get castSocket() {
     return apps[this._castAppName].ipc;
   }
