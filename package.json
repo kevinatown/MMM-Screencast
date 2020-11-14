@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "cross-spawn": "^6.0.5",
-    "electron": "^3.0.13",
+    "electron": "^9.1.0",
     "electron-positioner": "3.0.0",
     "node-ipc": "^9.1.1",
     "peer-dial": "0.0.8"
