@@ -126,6 +126,10 @@ class DialServer {
   }
 
   stopCast() {
+    if (this._castAppName) {
+      this.dialServer.delegate.stopApp(this._castAppName, 'run', (e) => console.log(e));
+    }
+
     console.log(this.dialServer, this.dialServer.delegate);
   }
 
