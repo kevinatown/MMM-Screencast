@@ -45,9 +45,9 @@ These notifications are emitted by MMM-Screencast.
 | Notification | Payload   | Description
 |------------- |-----------|------------
 | `MMM-Screencast:START-DIAL` | `{ port: <ORT_USED> }`  | Emitted when the DIAL server is running and the port it can be found on. The cast icon should be visible in your app now.
-| `MMM-Screencast:LAUNCH-APP` | `{ app: <APP_NAME>, state: <APP_PID_STATE> }` | Emitted when an app is intializing
-| `MMM-Screencast:RUN-APP` | `{ app: <APP_NAME>, state: <APP_PID_STATE> }` | Emitted when the app is intialized and running
-| `MMM-Screencast:STOP-APP` | `{ app: <APP_NAME>, state: <APP_PID_STATE> }` | Emitted when the app is stopped.
+| `MMM-Screencast:LAUNCH-APP` | `{ app: <APP_NAME>, state: <APP_STATE> }` | Emitted when an app is intializing
+| `MMM-Screencast:RUN-APP` | `{ app: <APP_NAME>, state: <APP_STATE> }` | Emitted when the app is intialized and running
+| `MMM-Screencast:STOP-APP` | `{ app: <APP_NAME>, state: <APP_STATE> }` | Emitted when the app is stopped.
 
 ### Listening Notifications
 These are the notifications that can be sent to MMM-Screencast in order to control it in some way.
