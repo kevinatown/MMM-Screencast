@@ -3,11 +3,12 @@ const http = require('http');
 const express = require('express');
 const { spawn } = require('cross-spawn');
 const { IpcClient } = require('./ipc.js');
+const { MODULE_NOTIFICATIONS } = require('./notifications.js');
 
 const app = express();
 const server = http.createServer(app);
 const PORT = 8569;
-const MANUFACTURER = "Kevin Townsend";
+const MANUFACTURER = "MMM-Screencast";
 const MODEL_NAME = "DIAL Server";
 let child = null;
 
@@ -75,12 +76,12 @@ class DialServer {
             castApp.state = "starting";
             castApp.launch(lauchData, this.config);
 
-            this.mmSendSocket('MMM-Screencast:LAUNCH-APP', { app: app.name, state: app.state });
+            this.mmSendSocket(MODULE_NOTIFICATIONS.launch_app, { app: app.name, state: app.state });
 
             castApp.ipc.on('APP_READY', () => {
               castApp.state = "running";
               this._castAppName = appName;
-              this.mmSendSocket('MMM-Screencast:RUN-APP', { app: app.name, state: app.state });
+              this.mmSendSocket(MODULE_NOTIFICATIONS.run_app, { app: app.name, state: app.state });
               callback(app.pid);
             });
           }
@@ -96,7 +97,7 @@ class DialServer {
               castApp.pid = null;
               child = null;
               this._castAppName = null;
-              this.mmSendSocket('MMM-Screencast:STOP-APP', { app: app.name, state: app.state });
+              this.mmSendSocket(MODULE_NOTIFICATIONS.stop_app, { app: app.name, state: app.state });
               callback(true);
             });
 
@@ -121,8 +122,14 @@ class DialServer {
 
     this.server.listen(usePort, () => {
       this.dialServer.start();
-      this.mmSendSocket('MMM-Screencast:START-DIAL', { port: usePort });
+      this.mmSendSocket(MODULE_NOTIFICATIONS.start_dial, { port: usePort });
     });
+  }
+
+  stopCast() {
+    if (this._castAppName) {
+      this.dialServer.delegate.stopApp(this._castAppName, 'run', (e) => false);
+    }
   }
 
   get castSocket() {

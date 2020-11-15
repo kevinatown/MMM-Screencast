@@ -1,5 +1,6 @@
 const NodeHelper = require("node_helper");
 const DialServer = require("./DialServer.js");
+const { MODULE_NOTIFICATIONS } = require('./notifications.js');
 
 module.exports = NodeHelper.create({
 	dialServer: new DialServer(),
@@ -12,6 +13,8 @@ module.exports = NodeHelper.create({
 				this.dialServer.setConfig(payload);
 				this.dialServer.start();
 				break;
+			case MODULE_NOTIFICATIONS.close:
+				this.dialServer.stopCast();
 			default:
 				break;
 		}

@@ -36,6 +36,27 @@ var config = {
 | `castName`| *Optional* The title to display in your device's cast list. <br>**Type** `string` defalt `os.hostname`
 | `port`    | *Optional* A port to run the dialserver on **Type** `number` default `8569`
 
+## Notifications
+MMM-Screencast can communicate with other modules through notifications.
+
+### Emmited Notifications
+These notifications are emitted by MMM-Screencast.
+
+| Notification | Payload   | Description
+|------------- |-----------|------------
+| `MMM-Screencast:START-DIAL` | `{ port: <ORT_USED> }`  | Emitted when the DIAL server is running and the port it can be found on. The cast icon should be visible in your app now.
+| `MMM-Screencast:LAUNCH-APP` | `{ app: <APP_NAME>, state: <APP_STATE> }` | Emitted when an app is intializing
+| `MMM-Screencast:RUN-APP` | `{ app: <APP_NAME>, state: <APP_STATE> }` | Emitted when the app is intialized and running
+| `MMM-Screencast:STOP-APP` | `{ app: <APP_NAME>, state: <APP_STATE> }` | Emitted when the app is stopped.
+
+### Listening Notifications
+These are the notifications that can be sent to MMM-Screencast in order to control it in some way.
+
+| Notification | Expected Payload | Description
+|------------- |------------------|------------
+| `MMM-Screencast:CLOSE` | none | This informs MMM-Screencast to close the currently running app. 
+
+
 ## Screenshots
 
 <p align="middle">

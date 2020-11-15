@@ -21,7 +21,12 @@ Module.register("MMM-Screencast", {
 		const div = document.createElement("div");
 		return div;
 	},
-	socketNotificationReceived: function(notification, payload) { 
+	socketNotificationReceived: function(notification, payload) {
 		this.sendNotification(notification, payload);
-	}
+	},
+	notificationReceived: function(notification, payload, sender) {
+		if (notification.includes('MMM-Screencast')) {
+			this.sendSocketNotification(notification);
+		}
+  },
 });
