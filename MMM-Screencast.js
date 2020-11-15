@@ -22,14 +22,11 @@ Module.register("MMM-Screencast", {
 		return div;
 	},
 	socketNotificationReceived: function(notification, payload) {
-		console.log(notification, payload)
 		this.sendNotification(notification, payload);
 	},
 	notificationReceived: function(notification, payload, sender) {
-    switch(notification) {
-      default:
-      	console.log(notification, payload, sender)
-      	break;
-    }
+		if (notification.includes('MMM-Screencast')) {
+			this.sendSocketNotification(notification);
+		}
   },
 });

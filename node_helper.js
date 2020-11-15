@@ -12,7 +12,7 @@ module.exports = NodeHelper.create({
 				this.dialServer.setConfig(payload);
 				this.dialServer.start();
 				break;
-			case 'CLOSE_SCREENCAST':
+			case 'MMM-Screencast:CLOSE':
 				this.dialServer.stopCast();
 			default:
 				break;
