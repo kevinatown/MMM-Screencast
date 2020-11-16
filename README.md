@@ -30,7 +30,9 @@ var config = {
 
 | Option    | Description
 |---------- |-----------
-| `position`| *Required* The position of the screencast window. <br>**Options:** `['bottomRight', 'bottomCenter', 'bottomLeft', 'center',  'topRight', 'topCenter', 'topLeft']` <br>**Type:** `string` <br>**Note:** This module config actual sets the location, not the magic mirror position config.
+| `position`| *Required* The position of the screencast window. <br>**Options:** `['bottomRight', 'bottomCenter', 'bottomLeft', 'center',  'topRight', 'topCenter', 'topLeft']` <br>**Type:** `string` <br>**Note:** This module config actual sets the location, not the magic mirror position config. **NOTE**
+| `x`       | *Optional* (**required if y is used**) Window's left offset from screen. Takes precedence over `position`.
+| `y`       | *Optional* (**required if x is used**) Window's left offset from screen. Takes precedence over `position`.
 | `height`  | *Required* Height of the screencast window. <br>**Type:** `number` (pixels)
 | `width`   | *Required* Width of the screencast window. <br>**Type:** `number` (pixels)
 | `castName`| *Optional* The title to display in your device's cast list. <br>**Type** `string` defalt `os.hostname`
