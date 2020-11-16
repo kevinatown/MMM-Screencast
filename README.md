@@ -30,7 +30,9 @@ var config = {
 
 | Option    | Description
 |---------- |-----------
-| `position`| *Required* The position of the screencast window. <br>**Options:** `['bottomRight', 'bottomCenter', 'bottomLeft', 'center',  'topRight', 'topCenter', 'topLeft']` <br>**Type:** `string` <br>**Note:** This module config actual sets the location, not the magic mirror position config.
+| `position`| *Required* The position of the screencast window. <br>**Options:** `['bottomRight', 'bottomCenter', 'bottomLeft', 'center',  'topRight', 'topCenter', 'topLeft']` <br>**Type:** `string` <br>**Note:** This module config actual sets the location, not the magic mirror position config. **NOTE**
+| `x`       | *Optional* (**required if y is used**) Window's left offset from screen. Takes precedence over `position`. <br>**Type:** `number` (pixels)
+| `y`       | *Optional* (**required if x is used**) Window's left offset from screen. Takes precedence over `position`. <br>**Type:** `number` (pixels)
 | `height`  | *Required* Height of the screencast window. <br>**Type:** `number` (pixels)
 | `width`   | *Required* Width of the screencast window. <br>**Type:** `number` (pixels)
 | `castName`| *Optional* The title to display in your device's cast list. <br>**Type** `string` defalt `os.hostname`
@@ -48,6 +50,7 @@ These notifications are emitted by MMM-Screencast.
 | `MMM-Screencast:LAUNCH-APP` | `{ app: <APP_NAME>, state: <APP_STATE> }` | Emitted when an app is intializing
 | `MMM-Screencast:RUN-APP` | `{ app: <APP_NAME>, state: <APP_STATE> }` | Emitted when the app is intialized and running
 | `MMM-Screencast:STOP-APP` | `{ app: <APP_NAME>, state: <APP_STATE> }` | Emitted when the app is stopped.
+| `MMM-Screencast:CONFIG-ERROR` | `{ message: <MESSAGE_ABOUT_ERROR>}` | Emitted when there is an issue with the config.
 
 ### Listening Notifications
 These are the notifications that can be sent to MMM-Screencast in order to control it in some way.

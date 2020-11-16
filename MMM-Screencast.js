@@ -22,6 +22,10 @@ Module.register("MMM-Screencast", {
 		return div;
 	},
 	socketNotificationReceived: function(notification, payload) {
+		if (notification.includes('ERROR')) {
+			const { message } = payload;
+			Log.error(`${notification}: ${message}`);
+		}
 		this.sendNotification(notification, payload);
 	},
 	notificationReceived: function(notification, payload, sender) {
