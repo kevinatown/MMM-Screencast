@@ -50,6 +50,7 @@ These notifications are emitted by MMM-Screencast.
 | `MMM-Screencast:LAUNCH-APP` | `{ app: <APP_NAME>, state: <APP_STATE> }` | Emitted when an app is intializing
 | `MMM-Screencast:RUN-APP` | `{ app: <APP_NAME>, state: <APP_STATE> }` | Emitted when the app is intialized and running
 | `MMM-Screencast:STOP-APP` | `{ app: <APP_NAME>, state: <APP_STATE> }` | Emitted when the app is stopped.
+| `MMM-Screencast:CONFIG-ERROR` | `{ message: <MESSAGE_ABOUT_ERROR>}` | Emitted when there is an issue with the config.
 
 ### Listening Notifications
 These are the notifications that can be sent to MMM-Screencast in order to control it in some way.

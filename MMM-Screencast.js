@@ -22,7 +22,6 @@ Module.register("MMM-Screencast", {
 		return div;
 	},
 	socketNotificationReceived: function(notification, payload) {
-		console.log(notification.includes('ERROR'), notification)
 		if (notification.includes('ERROR')) {
 			const { message } = payload;
 			Log.error(`${notification}: ${message}`);
