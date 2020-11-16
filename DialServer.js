@@ -3,7 +3,7 @@ const http = require('http');
 const express = require('express');
 const { spawn } = require('cross-spawn');
 const { IpcClient } = require('./ipc.js');
-const { MODULE_NOTIFICATIONS } = require('./notifications.js');
+const { MODULE_NOTIFICATIONS } = require('./constants.js');
 
 const app = express();
 const server = http.createServer(app);

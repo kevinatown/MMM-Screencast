@@ -1,6 +1,7 @@
 const electron = require('electron');
 const Positioner = require('electron-positioner');
 const { IpcServer } = require('./ipc.js');
+const { POSITIONS } = require('./constants.js');
 
 // more useragents here: https://developers.whatismybrowser.com/useragents/explore/operating_platform/smart-tv/
 const userAgent = 'Mozilla/5.0 (SMART-TV; Linux; Tizen 2.4.0) AppleWebkit/538.1 (KHTML, like Gecko) SamsungBrowser/1.1 TV Safari/538.1';
@@ -17,7 +18,9 @@ app.once('ready', () => {
   electron.session.defaultSession.setUserAgent(userAgent);
 
   ipcInstance.on('SEND_CONFIG', (data, socket) => {
-    const { url, position, width, height } = data;
+    const { url, position, width, height, x, y } = data;
+
+    const usingXY = x && y;
     
     // electron
     const windowOptions = {
@@ -32,11 +35,15 @@ app.once('ready', () => {
       frame: false,
       zoomFactor: 1.0,
       focusable: false
+      ...(usingXY ? { x, y } : {})
     };
 
     const screenCastWindow = new electron.BrowserWindow(windowOptions);
-    const positioner = new Positioner(screenCastWindow)
-    positioner.move(position);
+
+    if (!usingXY && POSITIONS[position]) {
+      const positioner = new Positioner(screenCastWindow);
+      positioner.move(POSITIONS[position]);
+    }
 
     screenCastWindow.loadURL(url);
 
