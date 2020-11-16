@@ -34,7 +34,7 @@ app.once('ready', () => {
       show: false,
       frame: false,
       zoomFactor: 1.0,
-      focusable: false
+      focusable: false,
       ...(usingXY ? { x, y } : {})
     };
 
