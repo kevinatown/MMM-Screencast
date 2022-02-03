@@ -121,7 +121,7 @@ class DialServer {
     }
 
     this.server.listen(usePort,
-      useIPv6 ? ':::' : '0.0.0.0',
+      useIPv6 ? '::' : '0.0.0.0',
       () => {
         this.dialServer.start();
         this.mmSendSocket(MODULE_NOTIFICATIONS.start_dial, { port: usePort });
