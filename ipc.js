@@ -1,7 +1,7 @@
 class Ipc {
   static get config() {
     return {
-      id:'screenCastWindow',
+      id: 'screenCastWindow',
       retry: 1000,
       socketRoot: 'tmp',
       networkHost: 'localhost',

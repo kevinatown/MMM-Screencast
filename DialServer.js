@@ -72,14 +72,14 @@ class DialServer {
         launchApp: (appName, lauchData, callback) => {
           const castApp = apps[appName];
           if (!!castApp) {
-            castApp.pid = "run";
-            castApp.state = "starting";
+            castApp.pid = 'run';
+            castApp.state = 'starting';
             castApp.launch(lauchData, this.config);
 
             this.mmSendSocket(MODULE_NOTIFICATIONS.launch_app, { app: app.name, state: app.state });
 
             castApp.ipc.on('APP_READY', () => {
-              castApp.state = "running";
+              castApp.state = 'running';
               this._castAppName = appName;
               this.mmSendSocket(MODULE_NOTIFICATIONS.run_app, { app: app.name, state: app.state });
               callback(app.pid);
@@ -93,7 +93,7 @@ class DialServer {
           if (castApp && castApp.pid == pid) {
             castApp.ipc.on('QUIT_HEARD', (data) => {
               castApp.ipc.disconnect();
-              castApp.state = "stopped";
+              castApp.state = 'stopped';
               castApp.pid = null;
               child = null;
               this._castAppName = null;
@@ -111,7 +111,7 @@ class DialServer {
   }
 
   start() {
-    const { castName, port } = this.config;
+    const { castName, port, useIPv6 = false } = this.config;
     const usePort = !!port ? port : PORT;
 
     this.initDialServer(usePort);
@@ -120,10 +120,12 @@ class DialServer {
       this.dialServer.friendlyName = castName;
     }
 
-    this.server.listen(usePort, () => {
-      this.dialServer.start();
-      this.mmSendSocket(MODULE_NOTIFICATIONS.start_dial, { port: usePort });
-    });
+    this.server.listen(usePort,
+      useIPv6 ? ':::' : '0.0.0.0',
+      () => {
+        this.dialServer.start();
+        this.mmSendSocket(MODULE_NOTIFICATIONS.start_dial, { port: usePort });
+      });
   }
 
   stopCast() {

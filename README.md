@@ -37,6 +37,7 @@ var config = {
 | `width`   | *Required* Width of the screencast window. <br>**Type:** `number` (pixels)
 | `castName`| *Optional* The title to display in your device's cast list. <br>**Type** `string` defalt `os.hostname`
 | `port`    | *Optional* A port to run the dialserver on **Type** `number` default `8569`
+| `useIPv6` | *Optional* Forces `http` to use the unassigned IPv6 address `::/0` **Type** `booelan` default `false`
 
 ## Notifications
 MMM-Screencast can communicate with other modules through notifications.
