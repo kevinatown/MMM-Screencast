@@ -26,10 +26,9 @@
     "electron": "^11.5.0",
     "electron-positioner": "3.0.0",
     "node-ipc": "^9.1.1",
-    "peer-dial": "0.0.8"
+    "peer-dial": "github:kevinatown/peer-dial"
   },
   "bugs": {
     "url": "https://github.com/kevinatown/MMM-Screencast/issues"
-  },
-  "devDependencies": {}
+  }
 }
