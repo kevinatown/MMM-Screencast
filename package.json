@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "cross-spawn": "^6.0.5",
-    "electron": "^11.5.0",
+    "electron": "^15.5.5",
     "electron-positioner": "3.0.0",
     "node-ipc": "^9.1.1",
     "peer-dial": "github:kevinatown/peer-dial"
