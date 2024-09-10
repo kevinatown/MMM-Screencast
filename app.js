@@ -82,9 +82,18 @@ app.once('ready', () => {
         // ipc.server.broadcast('screenCastWindow_shown', { show: true });
 
       const autoCloseScript = `
-        window.setInterval(function() {
-          if (document.getElementsByClassName('WEB_PAGE_TYPE_ACCOUNT_SELECTOR').length >= 1) {
-            console.log("mmm-screencast.exited");
+        let videoEleStop;
+
+       // consistently check the DOM for the video element
+        const interval = setInterval(() => {
+          videoEleStop = document.getElementsByTagName('video')[0];
+
+         // if the video element exists add an event listener to it and stop the interval
+          if (videoEleStop) {
+            videoEleStop.addEventListener('ended', (event) => {
+              console.log("mmm-screencast.exited");
+            });
+            clearInterval(interval);
           }
         }, 1000);
       `;
