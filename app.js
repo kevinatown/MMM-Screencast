@@ -21,7 +21,7 @@ app.once('ready', () => {
     const { url, position, width, height, x, y } = data;
 
     const usingXY = x && y;
-    
+
     // electron
     const windowOptions = {
       maxHeight: height,
@@ -59,23 +59,18 @@ app.once('ready', () => {
 
         //
         // THIS MIGHT NEED WORK
-        // 
         //
-
-
-        // 
         // maybe something like this:
-        // 
+        //
         // win.webContents.on('console-message', () => {
         //  // do the shit to cloes the window like above
         // })
-        // 
+        //
         // create a specific message or something to know that shit's done, or listen to whatever
         // https://electronjs.org/docs/api/web-contents#event-console-message
-        // 
+        //
         // ipc.server.on('screenCastWindow_config', (data, socket) => {
         //   const { extraScript, closeOnEnd } = data;
-          
         //   const doScript = `${extraScript} ${closeOnEnd ? autoCloseScript : ''}`;
         //   screenCastWindow.webContents.executeJavaScript(doScript, true);
 
@@ -87,12 +82,33 @@ app.once('ready', () => {
         // ipc.server.broadcast('screenCastWindow_shown', { show: true });
 
       const autoCloseScript = `
+        let videoEleStop;
 
+       // consistently check the DOM for the video element
+        const interval = setInterval(() => {
+          videoEleStop = document.getElementsByTagName('video')[0];
+
+         // if the video element exists add an event listener to it and stop the interval
+          if (videoEleStop) {
+            videoEleStop.addEventListener('ended', (event) => {
+              console.log("mmm-screencast.exited");
+            });
+            clearInterval(interval);
+          }
+        }, 1000);
       `;
+
+      screenCastWindow.webContents.on('console-message', (event, level, message, line, sourceId) => {
+        if (message === "mmm-screencast.exited") {
+           ipcInstance.server.emit(socket, 'quit');
+           app.quit();
+        }
+      });
 
       screenCastWindow.show();
       // screenCastWindow.webContents.openDevTools();
       screenCastWindow.webContents.executeJavaScript(autoPlayScript, true);
+      screenCastWindow.webContents.executeJavaScript(autoCloseScript, true);
       ipcInstance.emit(socket, 'APP_READY', {});
     });
   });
