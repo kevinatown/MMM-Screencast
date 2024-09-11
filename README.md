@@ -72,3 +72,5 @@ These are the notifications that can be sent to MMM-Screencast in order to contr
 ## Special Thanks and Contributors!
 * [@Podgrade](https://github.com/Podgrade) - for the user agent fix
 * [@Poolitzer](https://github.com/Poolitzer) - for the screenshots
+* [@goldyfruit](https://github.com/goldyfruit) - for the autoclose PR
+
