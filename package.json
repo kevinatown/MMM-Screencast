@@ -22,7 +22,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "cross-spawn": "^6.0.5",
+    "cross-spawn": "^6.0.6",
     "electron": "^24.1.2",
     "electron-positioner": "3.0.0",
     "node-ipc": "^9.1.1",
