@@ -18,7 +18,7 @@ const apps = {
     state: "stopped",
     allowStop: true,
     pid: null,
-    launch: function (launchData, config) {
+    launch: function (launchData, config, onClose) {
       const url = "https://www.youtube.com/tv?"+launchData;
       
       child = spawn('npm', ['start'], {
@@ -41,6 +41,9 @@ const apps = {
 
       child.on('close', function(code) {
          console.log('closing code: ' + code);
+         if (typeof onClose === 'function') {
+           onClose(code);
+         }
       });
     }
   }
@@ -74,15 +77,17 @@ class DialServer {
           if (!!castApp) {
             castApp.pid = 'run';
             castApp.state = 'starting';
-            castApp.launch(lauchData, this.config);
+            castApp.launch(lauchData, this.config, () => {
+              this._markAppStopped(appName);
+            });
 
-            this.mmSendSocket(MODULE_NOTIFICATIONS.launch_app, { app: app.name, state: app.state });
+            this.mmSendSocket(MODULE_NOTIFICATIONS.launch_app, { app: castApp.name, state: castApp.state });
 
             castApp.ipc.on('APP_READY', () => {
               castApp.state = 'running';
               this._castAppName = appName;
-              this.mmSendSocket(MODULE_NOTIFICATIONS.run_app, { app: app.name, state: app.state });
-              callback(app.pid);
+              this.mmSendSocket(MODULE_NOTIFICATIONS.run_app, { app: castApp.name, state: castApp.state });
+              callback(castApp.pid);
             });
           }
         },
@@ -92,12 +97,7 @@ class DialServer {
           
           if (castApp && castApp.pid == pid) {
             castApp.ipc.on('QUIT_HEARD', (data) => {
-              castApp.ipc.disconnect();
-              castApp.state = 'stopped';
-              castApp.pid = null;
-              child = null;
-              this._castAppName = null;
-              this.mmSendSocket(MODULE_NOTIFICATIONS.stop_app, { app: app.name, state: app.state });
+              this._markAppStopped(appName);
               callback(true);
             });
 
@@ -132,6 +132,29 @@ class DialServer {
     if (this._castAppName) {
       this.dialServer.delegate.stopApp(this._castAppName, 'run', (e) => false);
     }
+  }
+
+  _markAppStopped(appName) {
+    const castApp = apps[appName];
+    if (!castApp || castApp.state === 'stopped') {
+      return;
+    }
+
+    if (castApp.ipc) {
+      try {
+        castApp.ipc.disconnect();
+      } catch (e) {}
+    }
+
+    castApp.state = 'stopped';
+    castApp.pid = null;
+    child = null;
+
+    if (this._castAppName === appName) {
+      this._castAppName = null;
+    }
+
+    this.mmSendSocket(MODULE_NOTIFICATIONS.stop_app, { app: castApp.name, state: castApp.state });
   }
 
   get castSocket() {
